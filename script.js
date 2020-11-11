@@ -1,20 +1,35 @@
 const addItem = function (e) {
   if(e.key === 'Enter' || e.type === 'click'){
-    
-    const listItem = document.createElement('li');
-    listItem.innerHTML = document.getElementById('item_name').value;
-    document.getElementById('task_list').appendChild(listItem);
 
-    document.getElementById('item_name').value = "";
-  } 
+    if(document.getElementById('item_name').value.trim() === "") {
+      alert('enter a value')
+    } else {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = document.getElementById('item_name').value + ' - ';
+      
+      const removeButton = document.createElement('span');
+      removeButton.innerHTML = '(remove)';
+      removeButton.style.color = 'red';
+      removeButton.addEventListener('click', removeItem);
+      listItem.appendChild(removeButton);
+
+      document.getElementById('task_list').appendChild(listItem);
+
+      document.getElementById('item_name').value = "";
+    }
+  }
 }
 
 const removeItem = function (e) {
-  console.log(e.target.innerHTML);
+  document.getElementById('task_list').removeChild(e.target.parentElement);
 }
 
 // document.getElementById('btn_add').onclick = addItem;
 
 document.getElementById('btn_add').addEventListener('click', addItem);
 document.getElementById('item_name').addEventListener('keypress', addItem);
-document.getElementById('btn_remove').addEventListener('click', removeItem);
+
+for (i of document.getElementsByClassName('btn-remove')) {
+  i.addEventListener('click', removeItem);
+}
+
