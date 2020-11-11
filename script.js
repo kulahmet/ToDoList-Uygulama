@@ -1,6 +1,11 @@
 const addItem = function (e) {
-  if((e.type === 'keypress' && e.key === 'Enter') || e.type === 'click'){
-    console.log(e)
+  if(e.key === 'Enter' || e.type === 'click'){
+    
+    const listItem = document.createElement('li');
+    listItem.innerHTML = document.getElementById('item_name').value;
+    document.getElementById('task_list').appendChild(listItem);
+
+    document.getElementById('item_name').value = "";
   } 
 }
 
