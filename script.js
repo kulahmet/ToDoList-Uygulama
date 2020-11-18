@@ -43,6 +43,8 @@ const editItem = function (e) {
   }
 
   textInput.value = textItem.innerText;
+
+  textInput.select();
 }
 
 const cancelItem = function (e) {
