@@ -98,7 +98,11 @@ const saveItem = function (e) {
 const completeItem = function (e) {
   // Select textItem from the HTML elements
   const textItem = e.target.parentElement.getElementsByClassName('item-text')[0];
-  textItem.style.textDecoration = 'line-through';
+  if(textItem.style.textDecoration === 'line-through') {
+    textItem.style.textDecoration = "none";
+  } else {
+    textItem.style.textDecoration = 'line-through';
+  }
 }
 
 // document.getElementById('btn_add').onclick = addItem;
