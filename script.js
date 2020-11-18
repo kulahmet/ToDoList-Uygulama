@@ -67,6 +67,26 @@ const cancelItem = function (e) {
   textInput.value = textItem.innerText;
 }
 
+const saveItem = function (e) {
+  const textItem = e.target.parentElement.getElementsByClassName('item-text')[0];
+  const textInput = e.target.parentElement.getElementsByClassName('item-input')[0];
+  const editGroupButtons = e.target.parentElement.getElementsByClassName('btn-group-edit');
+  const saveGroupButtons = e.target.parentElement.getElementsByClassName('btn-group-save');
+
+  textItem.hidden = false;
+  textInput.hidden = true;
+
+  for (i of editGroupButtons) {
+    i.hidden = false;
+  }
+
+  for (i of saveGroupButtons) {
+    i.hidden = true;
+  }
+
+  textItem.innerText = textInput.value;
+}
+
 // document.getElementById('btn_add').onclick = addItem;
 
 document.getElementById('btn_add').addEventListener('click', addItem);
@@ -82,5 +102,9 @@ for (i of document.getElementsByClassName('btn-edit')) {
 
 for (i of document.getElementsByClassName('btn-cancel')) {
   i.addEventListener('click', cancelItem);
+}
+
+for (i of document.getElementsByClassName('btn-save')) {
+  i.addEventListener('click', saveItem);
 }
 
