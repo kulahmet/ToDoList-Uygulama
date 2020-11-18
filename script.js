@@ -142,8 +142,6 @@ const saveItem = function (e) {
   // Assign Text Input's value to Text Item's innerHTML
   if(textInput.value.trim() === "") {
     alert('enter a value');
-    // Empty the input value if there are empty spaces
-    document.getElementById('item_name').value = "";
   } else {
     textItem.innerText = textInput.value;
   }
