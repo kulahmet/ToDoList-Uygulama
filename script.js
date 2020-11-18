@@ -95,6 +95,12 @@ const saveItem = function (e) {
   }
 }
 
+const completeItem = function (e) {
+  // Select textItem from the HTML elements
+  const textItem = e.target.parentElement.getElementsByClassName('item-text')[0];
+  textItem.style.textDecoration = 'line-through';
+}
+
 // document.getElementById('btn_add').onclick = addItem;
 
 document.getElementById('btn_add').addEventListener('click', addItem);
@@ -114,5 +120,9 @@ for (i of document.getElementsByClassName('btn-cancel')) {
 
 for (i of document.getElementsByClassName('btn-save')) {
   i.addEventListener('click', saveItem);
+}
+
+for (i of document.getElementsByClassName('item-text')) {
+  i.addEventListener('click', completeItem);
 }
 
