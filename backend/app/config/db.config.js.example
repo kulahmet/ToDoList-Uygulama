@@ -1,0 +1,3 @@
+module.exports = {
+  url: 'mongodb+srv://[username]:[password]@[cluster0].sdsgi.mongodb.net/[database]?retryWrites=true&w=majority',
+};

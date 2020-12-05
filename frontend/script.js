@@ -23,16 +23,16 @@ for (let i of document.getElementsByClassName('item-text')) {
   i.addEventListener('click', completeItem);
 }
 
-// const getResponse = async () => {
-//   try{
-//     const response =  await fetch('http://localhost:8080/');
-//     if(response.ok){
-//       let jsonResponse = await response.json();
-//       console.log(jsonResponse);
-//     }
-//   }
-//   catch(error){
-//     console.log(error);
-//   }
-// }
-// getResponse();
+const getResponse = async () => {
+  try{
+    const response =  await fetch('http://localhost:8080/api/todoitems');
+    if(response.ok){
+      let jsonResponse = await response.json();
+      console.log(jsonResponse);
+    }
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+getResponse();
