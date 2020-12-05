@@ -1,4 +1,4 @@
-import {addItem, removeItem, editItem, cancelItem, saveItem, completeItem} from './add-item.js'
+import {addItem, addDbItem, removeItem, editItem, cancelItem, saveItem, completeItem} from './add-item.js'
 
 document.getElementById('btn_add').addEventListener('click', addItem);
 document.getElementById('item_name').addEventListener('keypress', addItem);
@@ -28,11 +28,15 @@ const getResponse = async () => {
     const response =  await fetch('http://localhost:8080/api/todoitems');
     if(response.ok){
       let jsonResponse = await response.json();
-      console.log(jsonResponse);
+      // console.log(jsonResponse);
+      for(let i=0; i<jsonResponse.length; i++){
+        addDbItem(jsonResponse[i])
+      }
     }
   }
   catch(error){
     console.log(error);
   }
 }
+
 getResponse();
