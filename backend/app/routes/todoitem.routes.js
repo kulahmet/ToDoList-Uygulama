@@ -21,7 +21,7 @@ module.exports = app => {
   // Delete a todo item with id
   router.delete("/:id", todoitems.delete);
 
-  // Create a new todo item
+  // Delete all todo items
   router.delete("/", todoitems.deleteAll);
 
   app.use('/api/todoitems', router);
