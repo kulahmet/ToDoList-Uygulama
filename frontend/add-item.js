@@ -41,7 +41,7 @@ const addDbItem = function (item) {
   // console.log(item.title);
   // Create <li> elemen on the fly
   const listItem = document.createElement('li');
-  
+  listItem.id = item.id;
   // Crete text input for the editing a task
   const textInput = document.createElement('input');
   // Manuplate the textInput attributes
@@ -107,6 +107,32 @@ const addDbItem = function (item) {
 
 const removeItem = function (e) {
   document.getElementById('task_list').removeChild(e.target.parentElement);
+
+  const url = 'http://localhost:8080/api/todoitems/' + e.target.parentElement.id;
+
+  let requestHeaders = {
+    "Content-Type": "application/json",
+  }
+
+  const postDetails = {
+    method: 'DELETE',
+    headers: requestHeaders
+  }
+
+  const deleteRequest = async () => {
+    try{
+      const response =  await fetch(url, postDetails);
+      if(response.ok){
+        let jsonResponse = await response.json();
+        console.log(jsonResponse)
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  deleteRequest();
 }
 
 const editItem = function (e) {
