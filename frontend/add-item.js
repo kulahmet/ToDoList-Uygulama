@@ -5,72 +5,34 @@ const addItem = function (e) {
       alert('enter a value');
       document.getElementById('item_name').value = "";
     } else {
-      // Create <li> elemen on the fly
-      const listItem = document.createElement('li');
-      
-      // Crete text input for the editing a task
-      const textInput = document.createElement('input');
-      // Manuplate the textInput attributes
-      textInput.className = 'item-input';
-      textInput.hidden = true;
-      // Append the created <input> element into the previously created parent <li> element
-      listItem.appendChild(textInput);
-      
-      // Create text node item for the editing a task
-      const textItem = document.createElement('span');
-      // Manuplate the textItem attributes
-      textItem.className = 'item-text';
-      textItem.innerHTML = document.getElementById('item_name').value;
-      textItem.addEventListener('click', completeItem);
-      // Append the created <input> element into the previously created parent <li> element
-      listItem.appendChild(textItem);
+      const url = 'http://localhost:8080/api/todoitems'
 
-      // Crete editButton for the editing a task
-      const editButton = document.createElement('span');
-      // Manuplate the editButton attributes
-      editButton.className = 'btn-edit btn-group-edit';
-      editButton.style.color = 'blue';
-      editButton.innerHTML = ' - (edit) - ';
-      editButton.addEventListener('click', editItem);
-      // Append the created editButton into the parent <li> element
-      listItem.appendChild(editButton);
+      const data = {
+        title: document.getElementById('item_name').value
+      }
+      let requestHeaders = {
+        "Content-Type": "application/json",
+      }
+      const postDetails = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: requestHeaders
+      }
 
-      // Crete saveButton for the editing a task
-      const saveButton = document.createElement('span');
-      // Manuplate the saveButton attributes
-      saveButton.className = 'btn-save btn-group-save';
-      saveButton.style.color = 'green';
-      saveButton.innerHTML = ' - (save) - ';
-      saveButton.hidden = true;
-      saveButton.addEventListener('click', saveItem);
-      // Append the created saveButton into the parent <li> element
-      listItem.appendChild(saveButton);
-      
-      // Create a seperate a span element
-      const removeButton = document.createElement('span');
-      // Manuplate the removeButtons attributes
-      removeButton.className = 'btn-remove btn-group-edit';
-      removeButton.innerHTML = '(remove)';
-      removeButton.style.color = 'red';
-      removeButton.addEventListener('click', removeItem);
-      // Append the created <span> element into the previously created <li> element
-      listItem.appendChild(removeButton);
+      const postRequest = async () => {
+        try{
+          const response =  await fetch(url, postDetails);
+          if(response.ok){
+            let jsonResponse = await response.json();
+            addDbItem(jsonResponse);
+          }
+        }
+        catch(error){
+          console.log(error);
+        }
+      }
 
-      // Crete cancelButton for the editing a task
-      const cancelButton = document.createElement('span');
-      // Manuplate the cancelButton attributes
-      cancelButton.className = 'btn-cancel btn-group-save';
-      cancelButton.style.color = 'red';
-      cancelButton.innerHTML = '(cancel)';
-      cancelButton.hidden = true;
-      cancelButton.addEventListener('click', cancelItem);
-      // Append the created cancelButton into the parent <li> element
-      listItem.appendChild(cancelButton);
-
-      // Append the created <li> element into the <ul> element
-      document.getElementById('task_list').appendChild(listItem);
-      // Empty the input value
-      document.getElementById('item_name').value = "";
+      postRequest();
     }
   }
 }
@@ -225,4 +187,21 @@ const completeItem = function (e) {
   }
 }
 
-export {addItem, addDbItem, removeItem, editItem, cancelItem, saveItem, completeItem}
+const getResponse = async () => {
+  try{
+    const response =  await fetch('http://localhost:8080/api/todoitems');
+    if(response.ok){
+      let jsonResponse = await response.json();
+      // console.log(jsonResponse);
+      document.getElementById('task_list').innerHTML = "";
+      for(let i=0; i<jsonResponse.length; i++){
+        addDbItem(jsonResponse[i])
+      }
+    }
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
+export {addItem, addDbItem, removeItem, editItem, cancelItem, saveItem, completeItem, getResponse}
